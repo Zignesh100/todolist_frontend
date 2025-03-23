@@ -1,24 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./Component/Login";
+import Register from "./Component/Register";
+import DashboardLayout from "./Component/DashboardLayout";
+import Home from "./page/Home";
+import Dashboard from "./Component/Dashboard";
+import Logout from "./Component/Logout/Logout";
+import PrivateRoute from "./PrivateRoute"; 
+import { useState } from "react";
 
 function App() {
+  const isAuthenticated = localStorage.getItem("token") || false;
+  const [refresh,setRefresh] = useState(false)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Register />} />
+        <Route path="/logout" element={<Logout />} />
+
+        
+        <Route element={<PrivateRoute isAuthenticated={isAuthenticated} />}>
+          <Route path="/layout" element={<DashboardLayout setRefresh={setRefresh}/>}>
+            <Route path="home" element={<Home refresh={refresh} />} />
+            <Route path="dashboard" element={<Dashboard name={"userName"} />} />
+          </Route>
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
