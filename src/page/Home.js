@@ -99,16 +99,16 @@ const Home = ({ refresh }) => {
   const currentTasks = tasks.slice(indexOfFirstTask, indexOfLastTask);
 
   return (
-    <div className="p-4">
+    <div className="p-4 ">
       <h2 className="text-2xl font-bold mb-4">📝 My Tasks</h2>
 
-      <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border border-gray-300 shadow-lg rounded-lg">
+        <div className="w-full  bg-white max-w-5xl overflow-x-auto">
+        <table className="table-auto w-full bg-white border border-gray-300 shadow-lg rounded-lg">
           <thead>
-            <tr className="bg-gray-200 text-gray-700 uppercase text-sm">
-              <th className="py-3 px-4 border">Title</th>
-              <th className="py-3 px-4 border">Description</th>
-              <th className="py-3 px-4 border">Due Date</th>
+            <tr className="bg-gray-200 text-gray-700 uppercase text-sm text-left">
+              <th className="py-3 px-4 border w-1/4">Title</th>
+              <th className="py-3 px-4 border w-2/4">Description</th>
+              <th className="py-3 px-4 border w-1/4">Due Date</th>
               <th className="py-3 px-4 border">Actions</th>
             </tr>
           </thead>
@@ -121,15 +121,25 @@ const Home = ({ refresh }) => {
               </tr>
             ) : currentTasks.length > 0 ? (
               currentTasks.map((task) => (
-                <tr key={task._id} className="text-center hover:bg-gray-100">
-                  <td className="py-3 px-4 border">{task.title}</td>
-                  <td className="py-3 px-4 border">{task.description}</td>
+                <tr key={task._id} className="hover:bg-gray-100">
+                  <td className="py-3 px-4 border break-words">{task.title}</td>
+                  <td className="py-3 px-4 border break-words relative group">
+                    <span className="truncate block w-48">
+                      {task.description ? task.description.substring(0, 40) + "..." : ""}
+                    </span>
+                    {task.description && (
+                      <span className="absolute left-0 top-8 hidden w-[500px] bg-gray-800 text-white text-xs rounded-md px-2 py-1 group-hover:block z-10">
+                        {task.description}
+                      </span>
+                    )}
+                  </td>
+
                   <td className="py-3 px-4 border">
                     {new Date(task.dueDate).toLocaleDateString()}
                   </td>
-                  <td className="py-3 px-4 border">
+                  <td className="py-3 px-4 border flex gap-2">
                     <button
-                      className="px-2 text-green-600 py-1 mr-2"
+                      className="px-2 text-green-600 py-1"
                       onClick={() => handleEdit(task)}
                     >
                       <CiEdit size={22} />
