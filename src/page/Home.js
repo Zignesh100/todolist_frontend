@@ -108,7 +108,7 @@ const Home = ({ refresh }) => {
             <tr className="bg-gray-200 text-gray-700 uppercase text-sm text-left">
               <th className="py-3 px-4 border w-1/4">Title</th>
               <th className="py-3 px-4 border w-2/4">Description</th>
-              <th className="py-3 px-4 border w-1/4">Due Date</th>
+              <th className="py-3 px-4 border w-1/4">Created Date</th>
               <th className="py-3 px-4 border">Actions</th>
             </tr>
           </thead>
