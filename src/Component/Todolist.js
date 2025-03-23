@@ -1,7 +1,9 @@
+
+
 import axios from "axios";
 import React, { useState } from "react";
 
-const TaskModal = ({ closeModal, addTaskToList,setRefresh}) => {
+const TaskModal = ({ closeModal, addTaskToList, setRefresh }) => {
   const [task, setTask] = useState({
     title: "",
     description: "",
@@ -9,9 +11,18 @@ const TaskModal = ({ closeModal, addTaskToList,setRefresh}) => {
   });
 
   const [message, setMessage] = useState("");
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
 
   const token = localStorage.getItem("token");
+
+  // ✅ Reusable handleChange function
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setTask((prevTask) => ({
+      ...prevTask,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -20,7 +31,7 @@ const TaskModal = ({ closeModal, addTaskToList,setRefresh}) => {
 
     try {
       const response = await axios.post(
-        "https://todolist-67oy.onrender.com/api/todos",
+        `${process.env.REACT_APP_API_URL}/api/todos`,
         task,
         {
           headers: {
@@ -29,7 +40,7 @@ const TaskModal = ({ closeModal, addTaskToList,setRefresh}) => {
           },
         }
       );
-      setRefresh((pre)=>!pre)
+      setRefresh((prev) => !prev);
       setMessage("Task added successfully!");
 
       if (typeof addTaskToList === "function") {
@@ -57,34 +68,37 @@ const TaskModal = ({ closeModal, addTaskToList,setRefresh}) => {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
+            name="title"
             placeholder="Task Title"
             className="w-full border p-2 rounded mb-3"
             value={task.title}
-            onChange={(e) => setTask({ ...task, title: e.target.value })}
+            onChange={handleChange}
             required
           />
 
           <textarea
+            name="description"
             placeholder="Task Description"
             className="w-full border p-2 rounded mb-3"
             value={task.description}
-            onChange={(e) => setTask({ ...task, description: e.target.value })}
+            onChange={handleChange}
             required
           />
 
           <input
             type="date"
+            name="dueDate"
             className="w-full border p-2 rounded mb-3"
             value={task.dueDate}
-            onChange={(e) => setTask({ ...task, dueDate: e.target.value })}
+            onChange={handleChange}
             required
           />
 
-          <div className="flex justify-between mt-4">
+          <div className="flex justify-end gap-2 mt-4">
             <button
               type="button"
               onClick={closeModal}
-              className="px-4 py-2 bg-gray-300 text-gray-700 rounded"
+              className="px-4 py-2 text-gray-700 rounded hover:bg-gray-100"
             >
               Cancel
             </button>

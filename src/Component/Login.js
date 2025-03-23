@@ -1,25 +1,18 @@
-
-
-
-
-
-
-
-
-
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { FaEye, FaEyeSlash } from "react-icons/fa"; 
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
+  const [messageType, setMessageType] = useState("error"); 
+  const [loading, setLoading] = useState(false);
   const [inputData, setInputData] = useState({
     email: "",
     password: "",
   });
-  const [passwordVisible, setPasswordVisible] = useState(false); 
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -27,63 +20,56 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-   
     setErrors({ email: "", password: "" });
-
-   
     if (!validateForm()) return;
+    setLoading(true);
 
     try {
       const response = await axios.post(
-        "https://todolist-67oy.onrender.com/api/login",
+        `${process.env.REACT_APP_API_URL}/api/login`,
         inputData
       );
 
       const { token, user } = response.data;
 
       if (token && user) {
-        localStorage.setItem("token", token); 
-        localStorage.setItem("user", JSON.stringify(user)); 
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(user));
         console.log("Token Saved:", token);
-      } else {
-        console.error("Token or user missing in response");
       }
 
       setMessage("Login Successful");
+      setMessageType("success");
 
       setTimeout(() => {
-        navigate("/layout/home"); 
+        navigate("/layout/home");
       }, 2000);
     } catch (error) {
-      setMessage(error.response?.data?.message || "Login Failed ");
+      setMessage(error.response?.data?.message || "Login Failed");
+      setMessageType("error");
+    } finally {
+      setLoading(false);
     }
   };
 
-  
   const handleChange = (e) => {
     setInputData({ ...inputData, [e.target.name]: e.target.value });
   };
-
 
   const validateForm = () => {
     let valid = true;
     let newErrors = { email: "", password: "" };
 
-    
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!inputData.email || !emailPattern.test(inputData.email)) {
       newErrors.email = "Please enter a valid email address.";
       valid = false;
     }
 
-   
-
-    setErrors(newErrors); 
+    setErrors(newErrors);
     return valid;
   };
 
- 
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
   };
@@ -95,9 +81,6 @@ const Login = () => {
           Welcome Back! Please log in to continue.
         </div>
 
-      
-
-        {/* Email input */}
         <div className="mb-6">
           <label htmlFor="email" className="block text-gray-600 font-bold">
             Email
@@ -116,7 +99,6 @@ const Login = () => {
           )}
         </div>
 
-        {/* Password input */}
         <div>
           <label htmlFor="password" className="block text-gray-600 font-bold">
             Password
@@ -132,7 +114,7 @@ const Login = () => {
               required
             />
             <div
-              className="absolute right-3 top-5     text-gray-600  text-xl cursor-pointer"
+              className="absolute right-3 top-5 text-gray-600 text-xl cursor-pointer"
               onClick={togglePasswordVisibility}
             >
               {passwordVisible ? <FaEyeSlash /> : <FaEye />}
@@ -143,12 +125,16 @@ const Login = () => {
           )}
         </div>
 
-
         {message && (
-          <div className=" my-2 text-red-600">{message}</div>
+          <div
+            className={`my-2 text-sm font-semibold text-center ${
+              messageType === "success" ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {message}
+          </div>
         )}
 
-        {/* Sign up link */}
         <p className="mt-2 text-sm text-gray-600">
           Don’t have an account?
           <NavLink to="/signup" className="text-indigo-500 font-bold ml-1">
@@ -156,12 +142,18 @@ const Login = () => {
           </NavLink>
         </p>
 
-        {/* Submit button */}
         <button
           type="submit"
-          className="cursor-pointer py-2 px-4 block mt-6 bg-[#884dee] text-white font-bold w-full text-center rounded hover:bg-[#6b3bb8] transition duration-300"
+          className="cursor-pointer py-2 px-4  mt-6 bg-[#884dee] text-white font-bold w-full text-center rounded hover:bg-[#6b3bb8] transition duration-300 flex justify-center items-center"
+          disabled={loading}
         >
-          Login
+
+
+{loading ? (
+            <span className="animate-spin border-t-2 border-white border-solid rounded-full w-5 h-5 mr-2"></span>
+          ) : null}
+        
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
     </div>
