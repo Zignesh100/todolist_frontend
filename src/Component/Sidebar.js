@@ -29,7 +29,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       <div className="flex justify-between items-center p-4">
         <h2 className={`text-lg font-bold transition-all ${isOpen ? "block" : "hidden"}`}>
           <NavLink to="/layout/dashboard" className="text-[#6b3bb8]">
-            TODOList
+            Todo List
           </NavLink>
         </h2>
         <button onClick={toggleSidebar} className="p-2 rounded hover:bg-[#d1beee]">
