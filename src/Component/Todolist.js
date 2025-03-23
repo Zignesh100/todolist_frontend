@@ -20,7 +20,7 @@ const TaskModal = ({ closeModal, addTaskToList,setRefresh}) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/todos",
+        "https://todolist-67oy.onrender.com/api/todos",
         task,
         {
           headers: {

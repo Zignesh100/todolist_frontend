@@ -17,7 +17,7 @@ const Register = () => {
   
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/register",
+        "https://todolist-67oy.onrender.com/api/register",
         inputdata
       );
       setmessage("Register Successful ");

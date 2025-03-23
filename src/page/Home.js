@@ -24,7 +24,7 @@ const Home = ({refresh}) => {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/api/todos", {
+      const response = await axios.get("https://todolist-67oy.onrender.com/api/todos", {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTasks(response.data.tasks);
@@ -34,7 +34,7 @@ const Home = ({refresh}) => {
   };
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/tasks/${id}`, {
+      await axios.delete(`https://todolist-67oy.onrender.com/api/tasks/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
      
@@ -68,7 +68,7 @@ const Home = ({refresh}) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/tasks/${editingTask}`,
+        `https://todolist-67oy.onrender.com/api/tasks/${editingTask}`,
         editForm,
         { headers: { Authorization: `Bearer ${token}` } }
       );
