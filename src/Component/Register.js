@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { baseUrl } from "../App";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Register = () => {
     setMessage(null); 
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/register`, inputData);
+      await axios.post(`${baseUrl}/api/register`, inputData);
       setMessage({ text: "Registration Successful!", type: "success" });
 
       setTimeout(() => {

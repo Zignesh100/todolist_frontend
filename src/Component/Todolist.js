@@ -2,6 +2,7 @@
 
 import axios from "axios";
 import React, { useState } from "react";
+import { baseUrl } from "../App";
 
 const TaskModal = ({ closeModal, addTaskToList, setRefresh }) => {
   const [task, setTask] = useState({
@@ -31,7 +32,7 @@ const TaskModal = ({ closeModal, addTaskToList, setRefresh }) => {
 
     try {
       const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/todos`,
+        `${baseUrl}/api/todos`,
         task,
         {
           headers: {

@@ -7,6 +7,7 @@ import Dashboard from "./Component/Dashboard";
 import Logout from "./Component/Logout/Logout";
 import PrivateRoute from "./PrivateRoute"; 
 import { useState } from "react";
+export const baseUrl = "https://todolist-67oy.onrender.com"
 
 function App() {
   const isAuthenticated = localStorage.getItem("token") || false;

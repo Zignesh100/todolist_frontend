@@ -4,6 +4,7 @@ import Pagination from "../Component/Pagination";
 import { CiEdit } from "react-icons/ci";
 import { MdDeleteForever } from "react-icons/md";
 import DeleteModal from "../Component/DeleteModal";
+import { baseUrl } from "../App";
 
 const Home = ({ refresh }) => {
   const [message, setMessage] = useState();
@@ -29,7 +30,7 @@ const Home = ({ refresh }) => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/todos`,
+        `${baseUrl}/api/todos`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setTasks(response.data.tasks);
@@ -42,7 +43,7 @@ const Home = ({ refresh }) => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`${process.env.REACT_APP_API_URL}/api/tasks/${id}`, {
+      await axios.delete(`${baseUrl}/api/tasks/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchTasks();
@@ -78,7 +79,7 @@ const Home = ({ refresh }) => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `${process.env.REACT_APP_API_URL}/api/tasks/${editingTask}`,
+        `${baseUrl}/api/tasks/${editingTask}`,
         editForm,
         { headers: { Authorization: `Bearer ${token}` } }
       );
