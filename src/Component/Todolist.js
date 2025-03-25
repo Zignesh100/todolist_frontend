@@ -62,7 +62,7 @@ const TaskModal = ({ closeModal, addTaskToList, setRefresh }) => {
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center  z-[1000]">
       <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-        <h2 className="text-xl font-bold mb-4 text-gray-800">Add New Task</h2>
+        <h2 className="text-xl font-bold mb-4 text-[#884dee]">Add New Task</h2>
 
         {message && <p className="mb-3 text-center font-semibold">{message}</p>}
 

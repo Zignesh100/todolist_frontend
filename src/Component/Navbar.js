@@ -3,10 +3,13 @@ import { FiUser, FiLogOut } from "react-icons/fi";
 import TaskModal from "../Component/Todolist";
 import { useNavigate } from "react-router-dom";
 import usericon from "../logo/man.png";
+import { CgProfile } from "react-icons/cg";
+import Profile from "../Component/Profile/Profile";
 const Navbar = ({ isOpen, setRefresh }) => {
   const navigate = useNavigate();
   const [userName, setUserName] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [profilemodal, setprofilemodal] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -59,8 +62,16 @@ const Navbar = ({ isOpen, setRefresh }) => {
             </button>
 
             {isDropdownOpen && (
-              <div className="absolute right-0 mt-3 w-60 px-5 py-3 bg-white rounded-lg shadow-md border">
+              <div className="absolute right-0 mt-3  w-40 px-5 py-3 bg-white rounded-lg shadow-md border">
                 <ul className="space-y-3 text-gray-900">
+                  <li>
+                    <button   onClick={() =>setprofilemodal (true)} className="flex items-center space-x-3 text-[#884dee] hover:text-[#ad87ef]">
+                      <CgProfile size={20} />
+                      <span >Profile</span>
+                    </button>
+                  </li>
+
+                  <hr />
                   <li>
                     <button
                       onClick={handleLogout}
@@ -76,6 +87,11 @@ const Navbar = ({ isOpen, setRefresh }) => {
           </div>
         </div>
       </div>
+
+      {profilemodal && (
+        
+        <Profile setRefresh={setRefresh} closemodalprofile={() => setprofilemodal(false)} />
+      )}
 
       {isModalOpen && (
         <TaskModal

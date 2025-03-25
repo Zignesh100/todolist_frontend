@@ -29,10 +29,9 @@ const Home = ({ refresh }) => {
   const fetchTasks = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        `${baseUrl}/api/todos`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const response = await axios.get(`${baseUrl}/api/todos`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setTasks(response.data.tasks);
     } catch (error) {
       console.error("Error fetching tasks:", error.response?.data || error);
@@ -103,7 +102,7 @@ const Home = ({ refresh }) => {
     <div className="p-4 ">
       <h2 className="text-2xl font-bold mb-4">📝 My Tasks</h2>
 
-        <div className="w-full  bg-white max-w-5xl overflow-x-auto">
+      <div className="w-auto  bg-white  overflow-x-auto">
         <table className="table-auto w-full bg-white border border-gray-300 shadow-lg rounded-lg">
           <thead>
             <tr className="bg-gray-200 text-gray-700 uppercase text-sm text-left">
@@ -126,7 +125,9 @@ const Home = ({ refresh }) => {
                   <td className="py-3 px-4 border break-words">{task.title}</td>
                   <td className="py-3 px-4 border break-words relative group">
                     <span className="truncate block w-48">
-                      {task.description ? task.description.substring(0, 40) + "..." : ""}
+                      {task.description
+                        ? task.description.substring(0, 40) + "..."
+                        : ""}
                     </span>
                     {task.description && (
                       <span className="absolute left-0 top-8 hidden w-[500px] bg-gray-800 text-white text-xs rounded-md px-2 py-1 group-hover:block z-10">
@@ -139,22 +140,21 @@ const Home = ({ refresh }) => {
                     {new Date(task.dueDate).toLocaleDateString()}
                   </td>
                   <td className="py-3 px-4 border border-gray-300 text-center">
-  <div className="flex gap-2 justify-center">
-    <button
-      className="px-2 text-green-600 py-1"
-      onClick={() => handleEdit(task)}
-    >
-      <CiEdit size={22} />
-    </button>
-    <button
-      className="px-2 py-1 text-red-600"
-      onClick={() => openDeleteModal(task._id)}
-    >
-      <MdDeleteForever size={22} />
-    </button>
-  </div>
-</td>
-
+                    <div className="flex gap-2 justify-center">
+                      <button
+                        className="px-2 text-green-600 py-1"
+                        onClick={() => handleEdit(task)}
+                      >
+                        <CiEdit size={22} />
+                      </button>
+                      <button
+                        className="px-2 py-1 text-red-600"
+                        onClick={() => openDeleteModal(task._id)}
+                      >
+                        <MdDeleteForever size={22} />
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               ))
             ) : (
@@ -178,7 +178,7 @@ const Home = ({ refresh }) => {
       {editingTask && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-xl font-bold mb-4 text-gray-800">Edit Task</h2>
+            <h2 className="text-xl font-bold mb-4 text-[#884dee]">Edit Task</h2>
             {message && (
               <p className="mb-3 text-center font-semibold">{message}</p>
             )}

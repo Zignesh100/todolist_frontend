@@ -11,7 +11,7 @@ const TokenExpiryChecker = () => {
         localStorage.removeItem("user");
         localStorage.removeItem("token");
         localStorage.removeItem("expiryTime");
-        navigate("/login");
+        navigate("/");
       }
     };
 

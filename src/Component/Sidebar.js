@@ -26,11 +26,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
   return (
     <div className={`fixed h-screen border shadow-md shadow-[#884dee] transition-all duration-300 ${isOpen ? "w-52" : "w-16"}`}>
       {/* Sidebar Header */}
-      <div className="flex justify-between items-center p-4">
-        <h2 className={`text-lg font-bold transition-all ${isOpen ? "block" : "hidden"}`}>
-          <NavLink to="/layout/dashboard" className="text-[#6b3bb8]">
-            Todo List
+      <div className="flex justify-between  items-center p-3">
+        <h2 className={`text-lg font-bold  transition-all ${isOpen ? "block" : "hidden"}`}>
+          <NavLink to="/layout/dashboard" className="    px-6 py-1  transition-all duration-300 text-[#6b3bb8] font-bold  text-2xl">
+          Taskify 
           </NavLink>
+         
         </h2>
         <button onClick={toggleSidebar} className="p-2 rounded hover:bg-[#d1beee]">
           <FiMenu size={24} />
