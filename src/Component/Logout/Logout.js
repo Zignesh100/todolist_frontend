@@ -5,12 +5,25 @@ const Logout = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
+    // Logout function
+    const handleLogout = () => {
+      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      localStorage.removeItem("expiryTime");
 
-    setTimeout(() => {
       navigate("/");
-    }, 2000);
+    };
+
+    // Expiry time check karna
+    const expiryTime = localStorage.getItem("expiryTime");
+
+    if (expiryTime && Date.now() >= expiryTime) {
+      handleLogout(); // Agar expiry ho chuka hai toh turant logout karo
+    } else {
+      // 1 hour ke baad automatic logout set karo
+      const remainingTime = expiryTime - Date.now();
+      setTimeout(handleLogout, remainingTime);
+    }
   }, [navigate]);
 
   return (

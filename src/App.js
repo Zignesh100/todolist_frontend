@@ -7,6 +7,7 @@ import Dashboard from "./Component/Dashboard";
 import Logout from "./Component/Logout/Logout";
 import PrivateRoute from "./PrivateRoute"; 
 import { useState } from "react";
+import TokenExpiryChecker from "./Component/Logout/TokenExpiryChecker";
 export const baseUrl = "https://todolist-67oy.onrender.com"
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <Router>
+      <TokenExpiryChecker/>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Register />} />

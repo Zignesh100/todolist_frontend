@@ -138,20 +138,23 @@ const Home = ({ refresh }) => {
                   <td className="py-3 px-4 border">
                     {new Date(task.dueDate).toLocaleDateString()}
                   </td>
-                  <td className="py-3 px-4 border flex gap-2">
-                    <button
-                      className="px-2 text-green-600 py-1"
-                      onClick={() => handleEdit(task)}
-                    >
-                      <CiEdit size={22} />
-                    </button>
-                    <button
-                      className="px-2 py-1 text-red-600"
-                      onClick={() => openDeleteModal(task._id)}
-                    >
-                      <MdDeleteForever size={22} />
-                    </button>
-                  </td>
+                  <td className="py-3 px-4 border border-gray-300 text-center">
+  <div className="flex gap-2 justify-center">
+    <button
+      className="px-2 text-green-600 py-1"
+      onClick={() => handleEdit(task)}
+    >
+      <CiEdit size={22} />
+    </button>
+    <button
+      className="px-2 py-1 text-red-600"
+      onClick={() => openDeleteModal(task._id)}
+    >
+      <MdDeleteForever size={22} />
+    </button>
+  </div>
+</td>
+
                 </tr>
               ))
             ) : (
